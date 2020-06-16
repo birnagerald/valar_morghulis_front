@@ -1,0 +1,14 @@
+export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
+export const USER_LOGOUT = "USER_LOGOUT";
+export const USER_SET_ID = "USER_SET_ID";
+
+export const USER_PROFILE_REQUEST = "USER_PROFILE_REQUEST";
+export const USER_PROFILE_RECEIVED = "USER_PROFILE_RECEIVED";
+export const USER_PROFILE_ERROR = "USER_PROFILE_ERROR";
+export const TEST_SUCCESS = "TEST_SUCCESS";
+
+export const alertConstants = {
+  SUCCESS: "ALERT_SUCCESS",
+  ERROR: "ALERT_ERROR",
+  CLEAR: "ALERT_CLEAR",
+};
