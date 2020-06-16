@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { testAttempt } from "../actions/actions";
+import { Button } from "react-bootstrap";
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
@@ -10,9 +11,9 @@ const mapDispatchToProps = {
 const App = (props) => {
   return (
     <div>
-      <button onClick={props.testAttempt}>
+      <Button variant="primary" onClick={props.testAttempt}>
         Get data with redux and graphql-request
-      </button>
+      </Button>
     </div>
   );
 };
