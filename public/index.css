@@ -1,0 +1,24 @@
+@import-normalize;
+
+.btn-register {
+  background-color: black !important;
+  border-color: black !important;
+}
+
+.btn-register:hover {
+  background-color: purple !important;
+  border-color: rgb(255, 255, 255) !important;
+}
+
+.c-white {
+  color: white !important;
+}
+
+.loginFormContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 35vh;
+  padding-bottom: 35.9vh;
+  background: linear-gradient(#e66465, #9198e5);
+}
