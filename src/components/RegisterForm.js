@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
+
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {};
 
-const LoginForm = (props) => {
+const RegisterForm = (props) => {
   return (
     <div className="container loginFormContainer">
       <div className="jumbotron">
@@ -35,7 +36,7 @@ const LoginForm = (props) => {
             variant="primary"
             type="submit"
           >
-            Login
+            Register
           </Button>
         </Form>
       </div>
@@ -43,4 +44,4 @@ const LoginForm = (props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

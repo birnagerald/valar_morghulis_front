@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
 import App from "./components/App";
-import LoginForm from "./components/LoginForm";
 import reducer from "./reducer";
 import thunkMiddleware from "redux-thunk";
 import { tokenMiddleware } from "./middleware";
@@ -22,7 +21,7 @@ const history = createHistory();
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Route path="/" component={LoginForm} />
+      <Route path="/" component={App} />
     </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
