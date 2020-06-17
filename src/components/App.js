@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import LoginForm from "./LoginForm";
 import Header from "./Header";
 import RegisterForm from "./RegisterForm";
 import { Route, Switch } from "react-router";
 import Main from "./Main";
-const mapStateToProps = () => ({});
+import { userLogout, userSetId } from "../actions/actions";
 
-const mapDispatchToProps = {};
+const mapStateToProps = (state) => ({
+  ...state.auth,
+});
+
+const mapDispatchToProps = {
+  // userProfileFetch,
+  userSetId,
+  userLogout,
+};
 
 const App = (props) => {
   const { isAuthenticated, userData, userLogout } = props;
+  useEffect(() => {
+    const userId = window.localStorage.getItem("userId");
+    const { userSetId } = props;
+
+    if (userId) {
+      userSetId(userId);
+    }
+  });
   return (
     <div className="container-fluid p-0 main-background">
       <Header

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Button, Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 
 const mapStateToProps = () => ({});
 
@@ -9,19 +9,17 @@ const mapDispatchToProps = {};
 const Header = (props) => {
   const renderUser = () => {
     const { userData, logout } = props;
-    console.log(props);
     if (undefined === userData) {
       return <i className="fas fa-Loading fa-spin" />;
     }
 
     return (
-      <Nav.Item>
-        <Button variant="link" onClick={logout}>
-          Logout
-        </Button>
-      </Nav.Item>
+      <Nav className="ml-auto">
+        <Nav.Link onClick={logout}>Logout</Nav.Link>
+      </Nav>
     );
   };
+  const { isAuthenticated } = props;
   return (
     <Navbar variant="dark" bg="dark" expand="lg">
       <Navbar.Brand href="/">Valar Morghulis</Navbar.Brand>
@@ -44,7 +42,7 @@ const Header = (props) => {
           </NavDropdown> */}
         </Nav>
 
-        {false ? (
+        {isAuthenticated ? (
           renderUser()
         ) : (
           <Nav className="ml-auto">

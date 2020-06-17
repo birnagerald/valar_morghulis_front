@@ -1,11 +1,11 @@
 import { request } from "graphql-request";
 import {
   TEST_SUCCESS,
-  // USER_LOGIN_SUCCESS,
+  USER_LOGIN_SUCCESS,
   // USER_PROFILE_REQUEST,
   // USER_PROFILE_RECEIVED,
-  // USER_PROFILE_ERROR,
-  // USER_SET_ID,
+  USER_PROFILE_ERROR,
+  USER_SET_ID,
   USER_LOGOUT,
 } from "./constants";
 
@@ -31,22 +31,26 @@ export const testSuccess = (data) => {
   };
 };
 
-// export const userLoginAttempt = (username, password) => {
-//   return (dispatch) => {
-//     return requests
-//       .post(`/login_check`, { username, password }, false)
-//       .then((response) =>
-//         dispatch(userLoginSuccess(response.token, response.id))
-//       );
-//   };
-// };
-// export const userLoginSuccess = (token, userId) => {
-//   return {
-//     type: USER_LOGIN_SUCCESS,
-//     token,
-//     userId,
-//   };
-// };
+export const userLoginAttempt = (username, password) => {
+  let token = "4dqs6d74qsd15qsd1";
+  let id = 1;
+  //connection call
+  return (dispatch) => {
+    // return requests
+    //   .post(`/login_check`, { username, password }, false)
+    //   .then((response) =>
+    //     dispatch(userLoginSuccess(response.token, response.id))
+    //   );
+    dispatch(userLoginSuccess(token, id));
+  };
+};
+export const userLoginSuccess = (token, userId) => {
+  return {
+    type: USER_LOGIN_SUCCESS,
+    token,
+    userId,
+  };
+};
 
 export const userLogout = () => {
   return {
@@ -54,12 +58,12 @@ export const userLogout = () => {
   };
 };
 
-// export const userSetId = (userId) => {
-//   return {
-//     type: USER_SET_ID,
-//     userId,
-//   };
-// };
+export const userSetId = (userId) => {
+  return {
+    type: USER_SET_ID,
+    userId,
+  };
+};
 
 // export const userProfileRequest = () => {
 //   return {
@@ -75,12 +79,12 @@ export const userLogout = () => {
 //   };
 // };
 
-// export const userProfileError = (userId) => {
-//   return {
-//     type: USER_PROFILE_ERROR,
-//     userId,
-//   };
-// };
+export const userProfileError = (userId) => {
+  return {
+    type: USER_PROFILE_ERROR,
+    userId,
+  };
+};
 
 // export const userProfileFetch = (userId) => {
 //   return (dispatch) => {

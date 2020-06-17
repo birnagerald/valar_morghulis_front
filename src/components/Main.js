@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import { testAttempt } from "../actions/actions";
-
 const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {

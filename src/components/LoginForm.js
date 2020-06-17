@@ -1,18 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
-const mapStateToProps = () => ({});
+import { userLoginAttempt } from "../actions/actions";
+import { Field, reduxForm } from "redux-form";
+const mapStateToProps = (state) => ({
+  ...state.auth,
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  userLoginAttempt,
+};
 
-const LoginForm = (props) => {
+let LoginForm = (props) => {
+  useEffect(() => {
+    if (props.token !== null) {
+      props.history.push("/");
+    }
+  });
+
+  const { handleSubmit } = props;
+  const onSubmit = (values) => {
+    props.userLoginAttempt(values.username, values.password);
+  };
   return (
     <div className="container loginFormContainer">
       <div className="jumbotron">
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId="formBasicEmail">
             <Form.Label className="c-white">Username</Form.Label>
-            <Form.Control type="email" placeholder="Enter username" />
+            <Field
+              name="username"
+              component="input"
+              type="text"
+              className="form-control"
+            />
             <Form.Text className="c-white">
               As the service is intended to be anonymous. We are not asking for
               an email.
@@ -21,7 +42,12 @@ const LoginForm = (props) => {
 
           <Form.Group controlId="formBasicPassword">
             <Form.Label className="c-white">Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Field
+              name="password"
+              component="input"
+              type="password"
+              className="form-control"
+            />
           </Form.Group>
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check
@@ -42,5 +68,10 @@ const LoginForm = (props) => {
     </div>
   );
 };
+
+LoginForm = reduxForm({
+  // a unique name for the form
+  form: "login",
+})(LoginForm);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
