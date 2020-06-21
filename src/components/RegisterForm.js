@@ -11,7 +11,7 @@ const RegisterForm = (props) => {
     <div className="container loginFormContainer">
       <div className="jumbotron">
         <Form>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="formBasicUsername">
             <Form.Label className="c-white">Username</Form.Label>
             <Form.Control type="email" placeholder="Enter username" />
             <Form.Text className="c-white">
@@ -23,13 +23,6 @@ const RegisterForm = (props) => {
           <Form.Group controlId="formBasicPassword">
             <Form.Label className="c-white">Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check
-              type="checkbox"
-              className="c-white"
-              label="Check me out"
-            />
           </Form.Group>
           <Button
             className="btn-primary btn-lg btn-block"

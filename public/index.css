@@ -20,20 +20,21 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-top: 35vh;
-  padding-bottom: 35.9vh;
+  padding-top: 28vh;
+  /* padding-bottom: 35.9vh; */
 }
 
 .mainContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-top: 22vh;
-  padding-bottom: 35vh;
+  padding-top: 15vh;
+  /* padding-bottom: 35vh; */
 }
 
 .main-background {
-  background: linear-gradient(#e66465, #9198e5);
+  background: #272727;
+  height: 100vh;
 }
 
 .jumbotron {
@@ -56,4 +57,47 @@
 
 .btn-primary:active {
   background-color: #d07287 !important;
+}
+
+.myCloud-main-container {
+  background-color: #e9ecef54 !important;
+  border-radius: 3px;
+}
+
+.myCloud-h2 {
+  text-align: center;
+  padding: 1em;
+}
+
+.myCloud-container {
+  flex-direction: column;
+  width: 100%;
+}
+
+.myCloud-card-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.article-title {
+  text-align: center;
+  font-weight: bold;
+  color: black;
+}
+
+.article-body {
+  font-weight: bold;
+  color: black;
+}
+
+.article-dorm-container {
+  background-color: #e9ecef54 !important;
+  text-align: center;
+}
+
+.article-dorm-container-label {
+  font-size: 1.3em;
+  color: black;
+  font-weight: bold;
 }

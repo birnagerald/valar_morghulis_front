@@ -14,7 +14,7 @@ const mapDispatchToProps = {
 let LoginForm = (props) => {
   useEffect(() => {
     if (props.token !== null) {
-      props.history.push("/");
+      props.history.push("/mycloud");
     }
   });
 
@@ -26,13 +26,14 @@ let LoginForm = (props) => {
     <div className="container loginFormContainer">
       <div className="jumbotron">
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="formBasicUsername">
             <Form.Label className="c-white">Username</Form.Label>
             <Field
               name="username"
               component="input"
               type="text"
               className="form-control"
+              placeholder="Enter your username"
             />
             <Form.Text className="c-white">
               As the service is intended to be anonymous. We are not asking for
@@ -47,13 +48,7 @@ let LoginForm = (props) => {
               component="input"
               type="password"
               className="form-control"
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check
-              type="checkbox"
-              className="c-white"
-              label="Check me out"
+              placeholder="Enter your password"
             />
           </Form.Group>
           <Button

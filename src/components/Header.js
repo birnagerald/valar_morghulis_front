@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Navbar, Nav } from "react-bootstrap";
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
 
 const mapDispatchToProps = {};
 
@@ -14,9 +16,15 @@ const Header = (props) => {
     }
 
     return (
-      <Nav className="ml-auto">
-        <Nav.Link onClick={logout}>Logout</Nav.Link>
-      </Nav>
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link href="/mycloud">My cloud</Nav.Link>
+          <Nav.Link href="#">Shared with me</Nav.Link>
+        </Nav>
+        <Nav className="ml-auto">
+          <Nav.Link onClick={logout}>Logout</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
     );
   };
   const { isAuthenticated } = props;
@@ -24,33 +32,17 @@ const Header = (props) => {
     <Navbar variant="dark" bg="dark" expand="lg">
       <Navbar.Brand href="/">Valar Morghulis</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
 
-          {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              Separated link
-            </NavDropdown.Item>
-          </NavDropdown> */}
-        </Nav>
-
-        {isAuthenticated ? (
-          renderUser()
-        ) : (
+      {isAuthenticated ? (
+        renderUser()
+      ) : (
+        <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link href="login">Sign-in</Nav.Link>
             <Nav.Link href="register">Sign-up</Nav.Link>
           </Nav>
-        )}
-      </Navbar.Collapse>
+        </Navbar.Collapse>
+      )}
     </Navbar>
   );
 };

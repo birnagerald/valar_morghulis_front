@@ -6,6 +6,9 @@ import RegisterForm from "./RegisterForm";
 import { Route, Switch } from "react-router";
 import Main from "./Main";
 import { userLogout, userSetId } from "../actions/actions";
+import MyCloud from "./MyCloud";
+import Article from "./Article";
+import ArticleForm from "./ArticleForm";
 
 const mapStateToProps = (state) => ({
   ...state.auth,
@@ -37,6 +40,9 @@ const App = (props) => {
       <Switch>
         <Route path="/register" component={RegisterForm} />
         <Route path="/login" component={LoginForm} />
+        <Route path="/mycloud" component={MyCloud} />
+        <Route path="/new-article" component={ArticleForm} />
+        <Route path="/article" component={Article} />
         <Route path="/" component={Main} />
       </Switch>
     </div>
