@@ -1,19 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
+import { userRegisterAttempt } from "../actions/actions";
+import { Field, reduxForm } from "redux-form";
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  ...state.auth,
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  userRegisterAttempt,
+};
 
-const RegisterForm = (props) => {
+let RegisterForm = (props) => {
+  useEffect(() => {
+    if (props.token !== null) {
+      props.history.push("/mycloud");
+    }
+  });
+
+  const { handleSubmit } = props;
+  const onSubmit = (values) => {
+    props.userRegisterAttempt(values.username, values.password);
+  };
+
   return (
     <div className="container loginFormContainer">
       <div className="jumbotron">
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId="formBasicUsername">
             <Form.Label className="c-white">Username</Form.Label>
-            <Form.Control type="email" placeholder="Enter username" />
+            <Field
+              name="username"
+              component="input"
+              type="text"
+              className="form-control"
+              placeholder="Enter your username"
+            />
             <Form.Text className="c-white">
               As the service is intended to be anonymous. We are not asking for
               an email.
@@ -22,7 +45,13 @@ const RegisterForm = (props) => {
 
           <Form.Group controlId="formBasicPassword">
             <Form.Label className="c-white">Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Field
+              name="password"
+              component="input"
+              type="password"
+              className="form-control"
+              placeholder="Enter your password"
+            />
           </Form.Group>
           <Button
             className="btn-primary btn-lg btn-block"
@@ -36,5 +65,10 @@ const RegisterForm = (props) => {
     </div>
   );
 };
+
+RegisterForm = reduxForm({
+  // a unique name for the form
+  form: "register",
+})(RegisterForm);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Button } from "react-bootstrap";
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
@@ -43,6 +44,17 @@ const Article = (props) => {
             </div>
           </div>
         </div>
+        <Button
+          className="my-3"
+          variant="success"
+          block="false"
+          // onClick={function onAnimeDeleteClick(event) {
+          //   event.preventDefault();
+          //   deleteHandler(anime.id);
+          // }}
+        >
+          Verify
+        </Button>
       </div>
     );
   };

@@ -9,6 +9,7 @@ import { userLogout, userSetId } from "../actions/actions";
 import MyCloud from "./MyCloud";
 import Article from "./Article";
 import ArticleForm from "./ArticleForm";
+import "./index.css";
 
 const mapStateToProps = (state) => ({
   ...state.auth,
@@ -38,11 +39,17 @@ const App = (props) => {
         logout={userLogout}
       />
       <Switch>
-        <Route path="/register" component={RegisterForm} />
-        <Route path="/login" component={LoginForm} />
+        <Route
+          path="/register"
+          component={isAuthenticated ? MyCloud : RegisterForm}
+        />
+        <Route
+          path="/login"
+          component={isAuthenticated ? MyCloud : LoginForm}
+        />
         <Route path="/mycloud" component={MyCloud} />
-        <Route path="/new-article" component={ArticleForm} />
-        <Route path="/article" component={Article} />
+        <Route path="/article/new" component={ArticleForm} />
+        <Route path="/article/:id" component={Article} />
         <Route path="/" component={Main} />
       </Switch>
     </div>

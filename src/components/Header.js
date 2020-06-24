@@ -30,7 +30,9 @@ const Header = (props) => {
   const { isAuthenticated } = props;
   return (
     <Navbar variant="dark" bg="dark" expand="lg">
-      <Navbar.Brand href="/">Valar Morghulis</Navbar.Brand>
+      <Navbar.Brand href={isAuthenticated ? "/mycloud" : "/"}>
+        Valar Morghulis
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
       {isAuthenticated ? (

@@ -31,6 +31,20 @@ export const testSuccess = (data) => {
   };
 };
 
+export const userRegisterAttempt = (username, password) => {
+  //connection call
+  return (dispatch) => {
+    // return requests
+    //   .post(`/login_check`, { username, password }, false)
+    //   .then((response) =>
+    //     dispatch(userLoginSuccess(response.token, response.id))
+    //   );
+
+    // log the user if register request succeed
+    dispatch(userLoginAttempt(username, password));
+  };
+};
+
 export const userLoginAttempt = (username, password) => {
   let token = "4dqs6d74qsd15qsd1";
   let id = 1;
@@ -44,6 +58,7 @@ export const userLoginAttempt = (username, password) => {
     dispatch(userLoginSuccess(token, id));
   };
 };
+
 export const userLoginSuccess = (token, userId) => {
   return {
     type: USER_LOGIN_SUCCESS,

@@ -1,5 +1,9 @@
 @import-normalize;
 
+.blockquote-footer {
+  color: white;
+}
+
 .btn-register {
   background-color: black !important;
   border-color: black !important;
@@ -39,6 +43,7 @@
 
 .jumbotron {
   background-color: #e9ecef54 !important;
+  color: white;
 }
 
 .btn-primary {
