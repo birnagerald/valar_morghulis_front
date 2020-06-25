@@ -2,7 +2,7 @@ import {
   USER_LOGIN_SUCCESS,
   USER_PROFILE_RECEIVED,
   USER_SET_ID,
-  USER_LOGOUT,
+  USER_LOGOUT
 } from "../actions/constants";
 
 export default (
@@ -10,7 +10,7 @@ export default (
     token: null,
     userId: null,
     isAuthenticated: false,
-    userData: null,
+    userData: null
   },
   action
 ) => {
@@ -20,13 +20,13 @@ export default (
         ...state,
         token: action.token,
         userId: action.userId,
-        isAuthenticated: true,
+        isAuthenticated: true
       };
     case USER_SET_ID:
       return {
         ...state,
         userId: action.userId,
-        isAuthenticated: true,
+        isAuthenticated: true
       };
     case USER_PROFILE_RECEIVED:
       return {
@@ -36,7 +36,7 @@ export default (
             ? action.userData
             : state.userData,
         isAuthenticated:
-          state.userId === action.userId && state.userData === null,
+          state.userId === action.userId && state.userData === null
       };
     case USER_LOGOUT:
       return {
@@ -44,7 +44,7 @@ export default (
         token: null,
         userId: null,
         isAuthenticated: false,
-        userData: null,
+        userData: null
       };
     default:
       return state;

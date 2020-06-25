@@ -41,11 +41,12 @@ const App = (props) => {
       <Switch>
         <Route
           path="/register"
-          component={isAuthenticated ? MyCloud : RegisterForm}
+          render={props => isAuthenticated ? <MyCloud {...props} />: <RegisterForm {...props} />}
         />
         <Route
           path="/login"
-          component={isAuthenticated ? MyCloud : LoginForm}
+          render={props => isAuthenticated ? <MyCloud {...props} />: <LoginForm {...props} />}
+           
         />
         <Route path="/mycloud" component={MyCloud} />
         <Route path="/article/new" component={ArticleForm} />

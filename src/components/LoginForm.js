@@ -11,20 +11,21 @@ const mapDispatchToProps = {
   userLoginAttempt,
 };
 
-let LoginForm = (props) => {
+ const LoginForm = (props) => {
   useEffect(() => {
     if (props.token !== null) {
       props.history.push("/mycloud");
     }
   });
 
-  const { handleSubmit } = props;
+  const { error, handleSubmit } = props
   const onSubmit = (values) => {
     props.userLoginAttempt(values.username, values.password);
   };
   return (
     <div className="container loginFormContainer">
       <div className="jumbotron">
+      {error && <div className="alert alert-danger">{error}</div>}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group controlId="formBasicUsername">
             <Form.Label className="c-white">Username</Form.Label>
@@ -35,10 +36,6 @@ let LoginForm = (props) => {
               className="form-control"
               placeholder="Enter your username"
             />
-            <Form.Text className="c-white">
-              As the service is intended to be anonymous. We are not asking for
-              an email.
-            </Form.Text>
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
@@ -64,9 +61,12 @@ let LoginForm = (props) => {
   );
 };
 
-LoginForm = reduxForm({
-  // a unique name for the form
-  form: "login",
-})(LoginForm);
+export default reduxForm({
+  form: "login"
+})(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(LoginForm)
+);
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

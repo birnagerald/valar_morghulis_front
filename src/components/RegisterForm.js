@@ -12,7 +12,7 @@ const mapDispatchToProps = {
   userRegisterAttempt,
 };
 
-let RegisterForm = (props) => {
+const RegisterForm = (props) => {
   useEffect(() => {
     if (props.token !== null) {
       props.history.push("/mycloud");
@@ -21,7 +21,7 @@ let RegisterForm = (props) => {
 
   const { handleSubmit } = props;
   const onSubmit = (values) => {
-    props.userRegisterAttempt(values.username, values.password);
+    props.userRegisterAttempt(values.username, values.mail, values.password);
   };
 
   return (
@@ -37,12 +37,17 @@ let RegisterForm = (props) => {
               className="form-control"
               placeholder="Enter your username"
             />
-            <Form.Text className="c-white">
-              As the service is intended to be anonymous. We are not asking for
-              an email.
-            </Form.Text>
           </Form.Group>
-
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label className="c-white">Email</Form.Label>
+              <Field
+                name="mail"
+                component="input"
+                type="email"
+                className="form-control"
+                placeholder="Enter your email"
+              />
+          </Form.Group>
           <Form.Group controlId="formBasicPassword">
             <Form.Label className="c-white">Password</Form.Label>
             <Field
@@ -66,9 +71,11 @@ let RegisterForm = (props) => {
   );
 };
 
-RegisterForm = reduxForm({
-  // a unique name for the form
-  form: "register",
-})(RegisterForm);
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+export default reduxForm({
+  form: "register"
+})(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(RegisterForm)
+);
