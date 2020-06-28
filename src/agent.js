@@ -15,6 +15,8 @@ const tokenPlugin = secured => {
   };
 };
 
+
+
 export const requests = {
   get: (url, secured = true) => {
     return superagent

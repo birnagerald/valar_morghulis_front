@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
+import Message from "./Message";
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
@@ -8,30 +9,27 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {};
 
 const Article = (props) => {
-  const { isAuthenticated } = props;
+  const { isAuthenticated, article, userData } = props;
+  if (null === article) {
+    return <Message message="L'article n'existe pas !" />;
+  }
   const renderMyCloud = () => {
     return (
       <div className="container-fluid myCloud-main-container">
         <div className="col">
           <div className="row myCloud-container">
             <div className="col mb-2">
-              <h1 className="article-title p-5">Article Title</h1>
+              <h1 className="article-title p-5">{article.title}</h1>
+              {article.verified ? <span class="badge badge-success">Verified</span> : null}
               <div className="article-body">
                 <p className="my-3">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                  nisi ab, expedita quas vitae fuga ea dolorem saepe, ex cum
-                  suscipit cupiditate reprehenderit dolores distinctio ut.
-                  Inventore repellendus adipisci quia. Lorem ipsum dolor sit
-                  amet consectetur adipisicing elit. Magni fugit dignissimos
-                  iste, minima quam tenetur sapiente voluptatem corrupti nulla,
-                  rem voluptatum. Culpa quidem eius iusto excepturi porro
-                  quisquam ratione necessitatibus?
+                 {article.body}
                 </p>
 
-                <footer className="blockquote-footer">
+                {/* <footer className="blockquote-footer">
                   Someone famous in{" "}
                   <cite title="Source Title">Source Title</cite>
-                </footer>
+                </footer> */}
                 <hr></hr>
                 <ul className="list-group">
                   <li className="list-group-item mb-1">Attached file</li>
@@ -44,7 +42,7 @@ const Article = (props) => {
             </div>
           </div>
         </div>
-        <Button
+        {userData !== null && userData.verified ? <Button
           className="my-3"
           variant="success"
           block="false"
@@ -54,7 +52,9 @@ const Article = (props) => {
           // }}
         >
           Verify
-        </Button>
+        </Button> 
+        : null}
+        
       </div>
     );
   };

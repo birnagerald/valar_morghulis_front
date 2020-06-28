@@ -3,25 +3,32 @@ import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
 import { Field, reduxForm } from "redux-form";
 import { FileUpload } from "./FileInput";
-import { articleAdd } from "../actions/actions";
+import { articleUpdate } from "../actions/actions";
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  initialValues: state.article.article
 });
 
 const mapDispatchToProps = {
-  articleAdd
+  articleUpdate
 };
 
-let ArticleForm = (props) => {
+let ArticleFormUpdate = (props) => {
+  // const {Id} = props;
+  // useEffect(() => {
+  //   props.history.push(`/article/${Id}`)
+  // });
+
   const { handleSubmit, isAuthenticated, pristine, submitting, error } = props;
   const onSubmit = (values) => {
-    const { articleAdd, reset } = props;
+    const { articleUpdate,Id } = props;
     // const ownerId = window.localStorage.getItem("userId");
-    return articleAdd(
+    return articleUpdate(
       values.title,
       values.body,
-      values.published
-    ).then(() => reset());
+      values.published,
+      Id
+    ).then(() => props.history.push(`/MyCloud`));
   };
   const renderMyCloud = () => {
     return (
@@ -76,7 +83,7 @@ let ArticleForm = (props) => {
             type="submit"
             disabled={pristine || submitting}
           >
-            Add Article
+            Update Article
           </Button>
         </Form>
       </div>
@@ -89,9 +96,9 @@ let ArticleForm = (props) => {
   );
 };
 
-ArticleForm = reduxForm({
+ArticleFormUpdate = reduxForm({
   // a unique name for the form
-  form: "articleForm",
-})(ArticleForm);
+  form: "articleFormUpdate",
+})(ArticleFormUpdate);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleFormUpdate);
