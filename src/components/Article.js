@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import Message from "./Message";
+import {crypt} from "../rsa";
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
@@ -13,17 +14,20 @@ const Article = (props) => {
   if (null === article) {
     return <Message message="L'article n'existe pas !" />;
   }
+  let privateKey = window.localStorage.getItem("prvKey");
+  var title = crypt.decrypt(privateKey, article.title);
+  var body = crypt.decrypt(privateKey, article.body);
   const renderMyCloud = () => {
     return (
       <div className="container-fluid myCloud-main-container">
         <div className="col">
           <div className="row myCloud-container">
             <div className="col mb-2">
-              <h1 className="article-title p-5">{article.title}</h1>
+              <h1 className="article-title p-5">{title.message}</h1>
               {article.verified ? <span class="badge badge-success">Verified</span> : null}
               <div className="article-body">
                 <p className="my-3">
-                 {article.body}
+                 {body.message}
                 </p>
 
                 {/* <footer className="blockquote-footer">

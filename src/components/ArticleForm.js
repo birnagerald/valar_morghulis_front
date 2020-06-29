@@ -4,6 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { Field, reduxForm } from "redux-form";
 import { FileUpload } from "./FileInput";
 import { articleAdd } from "../actions/actions";
+import {crypt} from "../rsa";
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
@@ -16,10 +17,12 @@ let ArticleForm = (props) => {
   const { handleSubmit, isAuthenticated, pristine, submitting, error } = props;
   const onSubmit = (values) => {
     const { articleAdd, reset } = props;
-    // const ownerId = window.localStorage.getItem("userId");
+    let publicKey = window.localStorage.getItem("pubKey");
+    var title = crypt.encrypt(publicKey, values.title)
+    var body = crypt.encrypt(publicKey, values.body)
     return articleAdd(
-      values.title,
-      values.body,
+      title,
+      body,
       values.published
     ).then(() => reset());
   };

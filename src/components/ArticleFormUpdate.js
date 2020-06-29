@@ -4,6 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { Field, reduxForm } from "redux-form";
 import { FileUpload } from "./FileInput";
 import { articleUpdate } from "../actions/actions";
+import {crypt} from "../rsa";
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   initialValues: state.article.article
@@ -14,6 +15,17 @@ const mapDispatchToProps = {
 };
 
 let ArticleFormUpdate = (props) => {
+  let privateKey = window.localStorage.getItem("prvKey");
+  if (props.article !== null){
+    if(props.article.title.charAt(0) === "{"){
+      props.article.title = crypt.decrypt(privateKey, props.article.title).message;
+     
+    }
+    if(props.article.body.charAt(0) === "{"){
+      props.article.body = crypt.decrypt(privateKey, props.article.body).message;
+     
+    }
+  }
   // const {Id} = props;
   // useEffect(() => {
   //   props.history.push(`/article/${Id}`)
@@ -22,10 +34,13 @@ let ArticleFormUpdate = (props) => {
   const { handleSubmit, isAuthenticated, pristine, submitting, error } = props;
   const onSubmit = (values) => {
     const { articleUpdate,Id } = props;
+    let publicKey = window.localStorage.getItem("pubKey");
+    var title = crypt.encrypt(publicKey, values.title)
+    var body = crypt.encrypt(publicKey, values.body)
     // const ownerId = window.localStorage.getItem("userId");
     return articleUpdate(
-      values.title,
-      values.body,
+      title,
+      body,
       values.published,
       Id
     ).then(() => props.history.push(`/MyCloud`));

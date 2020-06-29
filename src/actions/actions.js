@@ -1,6 +1,7 @@
 import { requests } from "../agent";
 import { SubmissionError } from "redux-form";
 import { parseApiErrors } from "../apiUtils";
+
 import {
   USER_LOGIN_SUCCESS,
   USER_PROFILE_REQUEST,
@@ -17,7 +18,7 @@ import {
   ARTICLE_UNLOAD,
   ARTICLE_REMOVED,
   ARTICLE_ADDED,
-  ARTICLE_UPDATED,
+  ARTICLE_UPDATED
 } from "./constants";
 
 export const userLoginSuccess = (token, userId) => {
@@ -60,10 +61,10 @@ export const userProfileFetch = () => {
 };
 
 
-export const userRegisterAttempt = (username,email, password) => {
+export const userRegisterAttempt = (username,email, password, public_key) => {
   return dispatch => {
     return requests
-      .post(`/users/register`, { username,email, password }, false)
+      .post(`/users/register`, { username,email, password, public_key }, false)
       .then(response => dispatch(userLoginAttempt(response.username, password)))
       // .catch((e) => {
       //   throw new SubmissionError({

@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
 import { userRegisterAttempt } from "../actions/actions";
 import { Field, reduxForm } from "redux-form";
+import {rsa} from "../rsa";
+
 
 const mapStateToProps = (state) => ({
   ...state.auth,
@@ -21,7 +23,13 @@ const RegisterForm = (props) => {
 
   const { handleSubmit } = props;
   const onSubmit = (values) => {
-    props.userRegisterAttempt(values.username, values.mail, values.password);
+    rsa.generateKeyPairAsync().then(keyPair => {
+      window.localStorage.setItem("pubKey",keyPair.publicKey);
+      window.localStorage.setItem("prvKey",keyPair.privateKey);
+      props.userRegisterAttempt(values.username, values.mail, values.password, keyPair.publicKey);
+
+  });
+    
   };
 
   return (

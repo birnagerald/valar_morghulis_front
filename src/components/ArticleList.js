@@ -4,6 +4,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Message from "./Message";
 import { Button, ButtonToolbar } from "react-bootstrap";
 import "./ArticleList.css";
+import {crypt} from "../rsa";
 
 const ArticleList = props => {
   const { articles, deleteHandler } = props;
@@ -12,16 +13,19 @@ const ArticleList = props => {
     return <Message message="Aucun article enregistré" />;
   }
 
+  let privateKey = window.localStorage.getItem("prvKey");
+  
   return (
     <div className="col mb-2">
       <TransitionGroup>
         {articles.map(article => {
+          let title = crypt.decrypt(privateKey, article.title);
           return (
             <CSSTransition key={article.id} timeout={1000} classNames="fade">
               <div className="card ">
                 <div className="card-body myCloud-card-body">
                   <h3>
-                    <Link to={`/article/${article.id}`}>{article.title}</Link>
+                    <Link to={`/article/${article.id}`}>{title.message}</Link>
                   </h3>
                   <ButtonToolbar>
                     <Button
