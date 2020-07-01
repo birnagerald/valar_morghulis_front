@@ -5,6 +5,8 @@ import { Field, reduxForm } from "redux-form";
 import { FileUpload } from "./FileInput";
 import { articleUpdate } from "../actions/actions";
 import {crypt} from "../rsa";
+import $ from "jquery";
+
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   initialValues: state.article.article
@@ -26,22 +28,26 @@ let ArticleFormUpdate = (props) => {
      
     }
   }
-  // const {Id} = props;
-  // useEffect(() => {
-  //   props.history.push(`/article/${Id}`)
-  // });
-
-  const { handleSubmit, isAuthenticated, pristine, submitting, error } = props;
+  
+  const { handleSubmit, isAuthenticated, pristine, submitting, error , deleteHandler} = props;
   const onSubmit = (values) => {
     const { articleUpdate,Id } = props;
     let publicKey = window.localStorage.getItem("pubKey");
     var title = crypt.encrypt(publicKey, values.title)
     var body = crypt.encrypt(publicKey, values.body)
-    // const ownerId = window.localStorage.getItem("userId");
+
+    if($('#files')[0].files.length > 0){
+      var data = new FormData();
+      for (let i = 0; i < $('#files')[0].files.length; i++) {
+            data.append("files",$("#files")[0].files[i]);
+          }
+    }
+
     return articleUpdate(
       title,
       body,
       values.published,
+      data,
       Id
     ).then(() => props.history.push(`/MyCloud`));
   };
@@ -88,9 +94,35 @@ let ArticleFormUpdate = (props) => {
             />
           </Form.Group>
           <Form.Group controlId="formBasicfile">
-            {/* <Form.Label className="c-white">Upload your files</Form.Label> */}
             <FileUpload />
           </Form.Group>
+          {props.article !== null && props.article.files.length > 0
+          ?  <ul className="list-group">
+                {props.article.files.map(file => {
+                  return( 
+                  <li 
+                  className="list-group-item mb-1" 
+                  id={file.id} 
+                  key={file.id}>
+                    <a href={process.env.REACT_APP_S3_ROOT+file.path}>{file.name}</a>
+                    <Button
+                      variant="outline-danger"
+                      className="float-right"
+                      onClick={function onFileDeleteClick(event) {
+                        event.preventDefault();
+                        deleteHandler(file.id,props.article.id);
+                      }}
+                    >
+                      Remove
+                    </Button>
+                    </li>
+                  )
+                 
+                })}
+            </ul>
+          : <p>No attachments</p>
+          }
+          
 
           <Button
             className="btn-primary btn-lg btn-block my-5"

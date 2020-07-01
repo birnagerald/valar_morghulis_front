@@ -1,7 +1,7 @@
 import React from "react";
 import ArticleFormUpdate from "./ArticleFormUpdate";
 import Loading from "./Loading";
-import { articleFetch, articleUnload } from "../actions/actions";
+import { articleFetch, articleUnload, fileDelete } from "../actions/actions";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => ({
@@ -10,7 +10,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   articleFetch,
-  articleUnload
+  articleUnload,
+  fileDelete
 };
 
 class ArticleFormContainer extends React.Component {
@@ -23,13 +24,14 @@ class ArticleFormContainer extends React.Component {
   }
 
   render() {
-    const { article, isFetching,history } = this.props;
+    const { article, isFetching,history, fileDelete } = this.props;
     if (isFetching) {
       return <Loading />;
     }
     return (
       <div>
         <ArticleFormUpdate
+          deleteHandler={fileDelete}
           article={article}
           history={history}
           ownerId={window.localStorage.getItem("userId")}

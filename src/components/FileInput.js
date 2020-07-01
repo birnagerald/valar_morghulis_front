@@ -13,7 +13,9 @@ const FileInput = ({
       onChange={adaptFileEventToValue(onChange)}
       onBlur={adaptFileEventToValue(onBlur)}
       multiple={true}
+      name="files"
       type="file"
+      id="files"
       {...props.input}
       {...props}
     />

@@ -3,7 +3,8 @@ import {
     ARTICLE_RECEIVED,
     ARTICLE_ERROR,
     ARTICLE_UNLOAD,
-    ARTICLE_UPDATED
+    ARTICLE_UPDATED,
+    FILE_REMOVED
   } from "../actions/constants";
   
   export default (state = { article: null, isFetching: false }, action) => {
@@ -30,6 +31,12 @@ import {
         return {
           ...state,
           article: action.article,
+          isFetching: false
+        };
+      case FILE_REMOVED:
+        return {
+          ...state,
+          article: state.article.file.filter(file => file.id !== action.fileId),
           isFetching: false
         };
       default:

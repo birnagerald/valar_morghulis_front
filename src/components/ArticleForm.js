@@ -5,6 +5,8 @@ import { Field, reduxForm } from "redux-form";
 import { FileUpload } from "./FileInput";
 import { articleAdd } from "../actions/actions";
 import {crypt} from "../rsa";
+import $ from "jquery";
+
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
@@ -20,11 +22,22 @@ let ArticleForm = (props) => {
     let publicKey = window.localStorage.getItem("pubKey");
     var title = crypt.encrypt(publicKey, values.title)
     var body = crypt.encrypt(publicKey, values.body)
+  
+
+    if($('#files')[0].files.length > 0){
+      var data = new FormData();
+      for (let i = 0; i < $('#files')[0].files.length; i++) {
+            data.append("files",$("#files")[0].files[i]);
+          }
+    }
+    
     return articleAdd(
       title,
       body,
-      values.published
+      values.published,
+      data
     ).then(() => reset());
+    
   };
   const renderMyCloud = () => {
     return (
@@ -69,7 +82,6 @@ let ArticleForm = (props) => {
             />
           </Form.Group>
           <Form.Group controlId="formBasicfile">
-            {/* <Form.Label className="c-white">Upload your files</Form.Label> */}
             <FileUpload />
           </Form.Group>
 

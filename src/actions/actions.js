@@ -18,7 +18,8 @@ import {
   ARTICLE_UNLOAD,
   ARTICLE_REMOVED,
   ARTICLE_ADDED,
-  ARTICLE_UPDATED
+  ARTICLE_UPDATED,
+  FILE_REMOVED
 } from "./constants";
 
 export const userLoginSuccess = (token, userId) => {
@@ -55,7 +56,7 @@ export const userProfileFetch = () => {
     dispatch(userProfileRequest());
     return requests
       .get(`/users/me`, true)
-      .then(response => dispatch(userProfileReceived(response.id, response)))
+      .then(response => dispatch(userProfileReceived(response.id, response),window.localStorage.setItem("pubKey",response.public_key)))
       .catch(() => dispatch(userProfileError()));
   };
 };
@@ -64,7 +65,7 @@ export const userProfileFetch = () => {
 export const userRegisterAttempt = (username,email, password, public_key) => {
   return dispatch => {
     return requests
-      .post(`/users/register`, { username,email, password, public_key }, false)
+      .post(`/users`, { username,email, password, public_key }, false)
       .then(response => dispatch(userLoginAttempt(response.username, password)))
       // .catch((e) => {
       //   throw new SubmissionError({
@@ -158,19 +159,32 @@ export const articleAdded = article => ({
   article
 });
 
+// export const fileAdd = (idArticle,file) => {
+// return requests
+//   .post(`/articles/${idArticle/files}`,
+//   )
+// };
+
 export const articleAdd = (
   title,
   body,
-  published
+  published,
+  data = null
 ) => {
   return dispatch => {
     return requests
-      .post(`/articles/new`, {
+      .post(`/articles`, {
         title: title,
         body: body,
         published: published
       })
-      .then(response => dispatch(articleAdded(response)))
+      .then(data === null 
+        ? response => dispatch(articleAdded(response)) 
+        : response => requests
+        .postFile(`/articles/${response.id}/files`,data)
+        .then(response => dispatch(articleAdded(response))
+        .catch(error => console.log(error)
+      )))
       .catch(error => {
         if (422 === error.response.status) {
           return dispatch(userLogout());
@@ -189,16 +203,23 @@ export const articleUpdate = (
   title,
   body,
   published,
+  data = null,
   id
 ) => {
   return dispatch => {
     return requests
-      .put(`/articles/${id}`, {
+      .patch(`/articles/${id}`, {
         title: title,
         body: body,
         published: published
       })
-      .then(response => dispatch(articleUpdated(response)))
+      .then(data === null 
+        ? response => dispatch(articleUpdated(response)) 
+        : response => requests
+        .postFile(`/articles/${response.id}/files`,data)
+        .then(dispatch(articleUpdated(response))
+        .catch(error => console.log(error)
+      )))
       .catch(error => {
         if (422 === error.response) {
           return dispatch(userLogout());
@@ -216,4 +237,17 @@ export const articleDelete = id => dispatch => {
 export const articleRemoved = id => ({
   type: ARTICLE_REMOVED,
   articleId: id
+});
+
+export const fileDelete = (id,articleId) => dispatch => {
+  return requests
+    .deleteFile(`/articles/${articleId}/files`,
+    [id]
+    )
+    .then(() => dispatch(articleFetch(articleId)));
+};
+
+export const fileRemoved = id => ({
+  type: FILE_REMOVED,
+  fileId: id
 });

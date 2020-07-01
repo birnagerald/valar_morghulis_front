@@ -35,13 +35,16 @@ const Article = (props) => {
                   <cite title="Source Title">Source Title</cite>
                 </footer> */}
                 <hr></hr>
-                <ul className="list-group">
-                  <li className="list-group-item mb-1">Attached file</li>
-                  <li className="list-group-item mb-1">Attached file</li>
-                  <li className="list-group-item mb-1">Attached file</li>
-                  <li className="list-group-item mb-1">Attached file</li>
-                  <li className="list-group-item ">Attached file</li>
+                {article.files.length > 0 
+                ? <ul className="list-group">
+                    {article.files.map(file => {
+                      return( 
+                      <li className="list-group-item mb-1" id={file.id} key={file.id}><a href={"https://valar-morghulis.s3.fr-par.scw.cloud/"+file.path}>{file.name}</a></li>
+                      )
+                     
+                    })}
                 </ul>
+                : <p>No attachments</p> }
               </div>
             </div>
           </div>

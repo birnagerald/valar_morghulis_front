@@ -12,6 +12,7 @@
     "graphql-request": "^2.0.0",
     "history": "4.6.3",
     "hybrid-crypto-js": "^0.2.2",
+    "jquery": "^3.5.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",

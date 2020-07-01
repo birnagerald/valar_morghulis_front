@@ -16,6 +16,7 @@ export const tokenMiddleware = store => next => action => {
     case USER_LOGOUT:
       window.localStorage.removeItem("jwtToken");
       window.localStorage.removeItem("userId");
+      window.localStorage.removeItem("pubKey");
       requests.setToken(null);
       break;
     case USER_PROFILE_ERROR:

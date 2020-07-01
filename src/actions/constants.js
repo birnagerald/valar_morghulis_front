@@ -24,6 +24,8 @@ export const ARTICLE_ADDED = "ARTICLE_ADDED";
 export const ARTICLE_UPDATED = "ARTICLE_UPDATED";
 
 
+export const FILE_REMOVED = "FILE_REMOVED";
+
 export const alertConstants = {
   SUCCESS: "ALERT_SUCCESS",
   ERROR: "ALERT_ERROR",
