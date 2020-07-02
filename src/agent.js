@@ -2,7 +2,7 @@ import superagentPromise from "superagent-promise";
 import _superagent from "superagent";
 
 const superagent = superagentPromise(_superagent, global.Promise);
-const API_ROOT = "http://localhost:8080/api/v1";
+const API_ROOT = "https://api-valar-morghulis.plsergent.xyz/api/v1";
 const responseBody = response => response.body;
 
 let token = null;
